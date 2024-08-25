@@ -1,0 +1,123 @@
+body {
+    font-family: Arial, sans-serif;
+    background: url('background.png');/* Replace with the path to your image */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-color: #ebf4f0;
+    margin: 0;
+    padding: 0;
+    height: 100vh; /* Ensures body takes full viewport height */
+}
+
+.title {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    font-size: 24px;
+    color: #060806;
+    background-color: rgba(237, 142, 142, 0.8); /* Slightly transparent background for readability */
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 1000; /* Ensures title is above other elements */
+}
+
+.chat-container {
+    width: 100%;
+    height: calc(100vh - 70px); /* Adjust height to accommodate title */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* Pushes chat box to the bottom */
+    align-items: center;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+    background: rgba(0, 0, 0, 0.2); /* Semi-transparent background */
+    margin-top: 60px; /* Space for title */
+}
+
+.chat-box {
+    width: 100%;
+    max-width: 1000px; /* Adjust as needed */
+    height: 100%;
+    border: none; /* Remove border */
+    padding: 10px;
+    background: rgba(248, 243, 243, 0.2); /* Semi-transparent white background */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+}
+
+#chat-log {
+    height: calc(100% - 50px); /* Adjust height for chat messages */
+    overflow-y: scroll;
+    margin-bottom: 10px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0);
+    border-radius: 8px;
+}
+
+.message {
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    max-width: 75%;
+    clear: both;
+}
+
+.user-message {
+    background-color: #d0f0c0;
+    align-self: flex-end;
+    margin-left: auto;
+}
+
+.ai-message {
+    background-color: #e0e0e0;
+}
+
+.answer-buttons {
+    margin-top: 10px;
+}
+
+.answer-buttons button {
+    margin-right: 5px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+.answer-buttons button:hover {
+    background-color: #0056b3;
+}
+
+.input-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-top: auto; /* Pushes input to the bottom */
+}
+
+#user-input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px 0 0 5px;
+    margin-right: 0;
+}
+
+button {
+    padding: 10px;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}

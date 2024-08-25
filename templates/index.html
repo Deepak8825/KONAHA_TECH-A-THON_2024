@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stress Relief Chatbot</title>
+    <link rel="stylesheet" href="{{ url_for('custom_static', filename='new2.css') }}">
+    <style>
+       body {
+    background-image: url("{{ url_for('static', filename='background.png') }}");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+ 
+.input-container {
+    display: flex;
+    align-items: center;
+}
+ 
+#user-input {
+    flex: 1;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+ 
+button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    margin-left: 10px;
+}
+ 
+button:hover {
+    background-color: #45a049;
+}
+ 
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+ 
+.restart-button button {
+    background-color: #008CBA;
+}
+ 
+.quit-button button {
+    background-color: #f44336;
+}
+ 
+       /* .chat-container {
+            position: relative;
+            height: 80vh;
+            margin: 0 auto;
+            width: 60%;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 60px;
+        }*/
+       
+    </style>
+</head>
+<body>
+    <div class="title">Serene AI</div>
+    <div class="chat-container">
+        <div class="chat-box">
+            <div id="chat-log">
+                <!-- Chat messages will appear here -->
+            </div>
+            <div class="input-container">
+                <input type="text" id="user-input" placeholder="Type your message here...">
+                <button onclick="sendMessage()">Send</button>
+            </div>
+            <div class="button-container">
+                <div class="restart-button">
+                    <button onclick="restartConversation()">Restart</button>
+                </div>
+                <div class="quit-button">
+                    <button onclick="quitConversation()">Quit</button>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+    <script>
+    document.getElementById("user-input").addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            sendMessage();
+        }
+    });
+ 
+    function sendMessage() {
+        const userInput = document.getElementById("user-input").value;
+        const chatLog = document.getElementById("chat-log");
+ 
+        if (userInput.trim() === "") return;
+ 
+        chatLog.innerHTML += `<div class="message user-message">User: ${userInput}</div>`;
+ 
+        fetch('/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ message: userInput })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message) {
+                chatLog.innerHTML += `<div class="message ai-message">Bot: ${data.message}</div>`;
+            }
+            if (data.question) {
+                chatLog.innerHTML += `<div class="message ai-message">Bot: ${data.question}</div>`;
+                const answersHTML = data.answers.map(answer =>
+                    `<div class="answer-buttons">
+                        <button onclick="sendAnswer('${answer}')">${answer}</button>
+                    </div>`
+                ).join("");
+                chatLog.innerHTML += answersHTML;
+            }
+            if (data.motivational_quote) {
+                chatLog.innerHTML += `<div class="message ai-message">Bot: ${data.motivational_quote}</div>`;
+            }
+            if (data.stress_relaxation_exercise) {
+                chatLog.innerHTML += `<div class="message ai-message">Bot: ${data.stress_relaxation_exercise}</div>`;
+            }
+            if (data.wellness_tip) {
+                chatLog.innerHTML += `<div class="message ai-message">Bot: ${data.wellness_tip}</div>`;
+            }
+            if (data.resources) {
+                const resources = data.resources.map(resource =>
+                    `<a href="${resource.link}" target="_blank">${resource.name}</a><br>`
+                ).join("");
+                chatLog.innerHTML += `<div class="message ai-message">Bot: Here are some resources for you:<br>${resources}</div>`;
+            }
+            if (data.restart) {
+                chatLog.innerHTML += `<div class="message ai-message">Bot: ${data.restart}</div>`;
+            }
+            document.getElementById("user-input").value = "";
+            chatLog.scrollTop = chatLog.scrollHeight;
+        });
+    }
+ 
+    function sendAnswer(answer) {
+        const chatLog = document.getElementById("chat-log");
+ 
+        chatLog.innerHTML += `<div class="message user-message">User: ${answer}</div>`;
+ 
+        fetch('/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ message: answer })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message) {
+                chatLog.innerHTML += `<div class="message ai-message">Bot: ${data.message}</div>`;
+            }
+            if (data.question) {
+                chatLog.innerHTML += `<div class="message ai-message">Bot: ${data.question}</div>`;
+                const answersHTML = data.answers.map(answer =>
+                    `<div class="answer-buttons">
+                        <button onclick="sendAnswer('${answer}')">${answer}</button>
+                    </div>`
+                ).join("");
+                chatLog.innerHTML += answersHTML;
+            }
+            if (data.motivational_quote) {
+                chatLog.innerHTML += `<div class="message ai-message">Bot: ${data.motivational_quote}</div>`;
+            }
+            if (data.stress_relaxation_exercise) {
+                chatLog.innerHTML += `<div class="message ai-message">Bot: ${data.stress_relaxation_exercise}</div>`;
+            }
+            if (data.wellness_tip) {
+                chatLog.innerHTML += `<div class="message ai-message">Bot: ${data.wellness_tip}</div>`;
+            }
+            if (data.resources) {
+                const resources = data.resources.map(resource =>
+                    `<a href="${resource.link}" target="_blank">${resource.name}</a><br>`
+                ).join("");
+                chatLog.innerHTML += `<div class="message ai-message">Bot: Here are some resources for you:<br>${resources}</div>`;
+            }
+            if (data.restart) {
+                chatLog.innerHTML += `<div class="message ai-message">Bot: ${data.restart}</div>`;
+            }
+            document.getElementById("user-input").value = "";
+            chatLog.scrollTop = chatLog.scrollHeight;
+        });
+    }
+ 
+    function restartConversation() {
+        const chatLog = document.getElementById("chat-log");
+        chatLog.innerHTML += `<div class="message ai-message">Bot: Restarting the conversation...</div>`;
+        fetch('/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ message: 'restart' })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message) {
+                chatLog.innerHTML += `<div class="message ai-message">Bot: ${data.message}</div>`;
+            }
+            if (data.question) {
+                chatLog.innerHTML += `<div class="message ai-message">Bot: ${data.question}</div>`;
+                const answersHTML = data.answers.map(answer =>
+                    `<div class="answer-buttons">
+                        <button onclick="sendAnswer('${answer}')">${answer}</button>
+                    </div>`
+                ).join("");
+                chatLog.innerHTML += answersHTML;
+            }
+            document.getElementById("user-input").value = "";
+            chatLog.scrollTop = chatLog.scrollHeight;
+        });
+    }
+ 
+    function quitConversation() {
+        const chatLog = document.getElementById("chat-log");
+        chatLog.innerHTML += `<div class="message ai-message">Bot: Thank you for chatting! Take care and have a wonderful day!</div>`;
+        document.getElementById("user-input").value = "";
+        document.querySelector(".input-container").style.display = "none";
+        document.querySelector(".restart-button").style.display = "none";
+        document.querySelector(".quit-button").style.display = "none";
+    }
+ 
+    </script>
+</body>
+</html>

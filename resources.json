@@ -1,0 +1,46 @@
+{
+    "low": [
+      {
+        "name": "Headspace",
+        "link": "https://www.headspace.com/"
+      },
+      {
+        "name": "Calm",
+        "link": "https://www.calm.com/"
+      }
+    ],
+    "medium": [
+      {
+        "name": "BetterHelp",
+        "link": "https://www.betterhelp.com/"
+      },
+      {
+        "name": "7 Cups",
+        "link": "https://www.7cups.com/"
+      }
+    ],
+    "high": [
+      {
+        "name": "National Suicide Prevention Lifeline",
+        "link": "https://suicidepreventionlifeline.org/"
+      },
+      {
+        "name": "Crisis Text Line",
+        "link": "https://www.crisistextline.org/"
+      },
+      {
+        "name": "National Alliance on Mental Illness (NAMI)",
+        "link": "https://www.nami.org/"
+      },
+      {
+        "name": "Substance Abuse and Mental Health Services Administration (SAMHSA)",
+        "link": "https://www.samhsa.gov/"
+      },
+      {
+        "name": "MentalHealth.gov",
+        "link": "https://www.mentalhealth.gov/"
+      }
+    ]
+  }
+   
+ 
